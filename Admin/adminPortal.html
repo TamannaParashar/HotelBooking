@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Booking Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            padding: 2rem;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            margin-bottom: 1rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 0.8rem;
+            text-align: left;
+        }
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        #refreshBtn {
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Portal - All Bookings</h1>
+    <button id="refreshBtn">Refresh Bookings</button>
+    <table>
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Check-In</th>
+                <th>Check-Out</th>
+                <th>Adults</th>
+                <th>Children</th>
+                <th>Room Type</th>
+                <th>Special Requests</th>
+            </tr>
+        </thead>
+        <tbody id="bookingsBody">
+            <!-- Booking rows -->
+        </tbody>
+    </table>
+
+    <script>
+        async function fetchBookings() {
+            try {
+                const response = await fetch('/api/allbookings');
+                const bookings = await response.json();
+                const tbody = document.getElementById('bookingsBody');
+                tbody.innerHTML = '';
+
+                bookings.forEach(booking => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${booking.full_name}</td>
+                        <td>${booking.email}</td>
+                        <td>${booking.phone}</td>
+                        <td>${booking.check_in}</td>
+                        <td>${booking.check_out}</td>
+                        <td>${booking.adults}</td>
+                        <td>${booking.children}</td>
+                        <td>${booking.room_type}</td>
+                        <td>${booking.special_requests}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                alert('Failed to fetch bookings');
+                console.error('Error:', error);
+            }
+        }
+
+        document.getElementById('refreshBtn').addEventListener('click', fetchBookings);
+        window.onload = fetchBookings;
+    </script>
+</body>
+</html>
