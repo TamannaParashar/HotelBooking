@@ -5,6 +5,7 @@ Hotel Sky is a modern hotel website that allows users to browse room offerings, 
 ---
 
 ## 📁 Project Structure
+```
 HotelBooking/
 ├── Admin/
 │ ├── adminLogin.html
@@ -20,7 +21,7 @@ HotelBooking/
 ├── script.js
 ├── server.js (or index.js)
 └── README.md
-
+```
 
 ---
 
